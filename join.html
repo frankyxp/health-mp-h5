@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="description" content="加入福善家事，成为社区健康管家。专业康养服务平台诚邀健康管理人才加盟。">
+  <title>社区健康管家招募 - 福善家事</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwindcss.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#e6f9ff',
+              100: '#ccf2ff',
+              200: '#99e6ff',
+              300: '#66d9ff',
+              400: '#33cdff',
+              500: '#00BFFF',
+              600: '#009dd4',
+              700: '#0e4d6f',
+              800: '#0a3a54',
+              900: '#062738',
+            }
+          },
+          fontFamily: {
+            sans: ['"PingFang SC"', '"Microsoft YaHei"', '"Helvetica Neue"', 'Arial', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: "PingFang SC", "Microsoft YaHei", "Helvetica Neue", Arial, sans-serif;
+      background: #f0f7fc;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Hero 区域 */
+    .hero-section {
+      position: relative;
+      width: 100%;
+      min-height: 420px;
+      background: linear-gradient(160deg, #0e4d6f 0%, #0a7ea8 35%, #00BFFF 70%, #33cdff 100%);
+      overflow: hidden;
+    }
+
+    .hero-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background:
+        radial-gradient(ellipse at 70% 20%, rgba(255, 255, 255, 0.12) 0%, transparent 60%),
+        radial-gradient(ellipse at 30% 80%, rgba(0, 0, 0, 0.08) 0%, transparent 50%);
+    }
+
+    .hero-section::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      right: 0;
+      height: 60px;
+      background: #f0f7fc;
+      border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+    }
+
+    .hero-person {
+      position: absolute;
+      right: -10px;
+      top: 50%;
+      transform: translateY(-55%);
+      width: 220px;
+      height: 300px;
+      opacity: 0.18;
+      background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.5) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+
+    /* 卡片 */
+    .advantage-card {
+      background: #fff;
+      border-radius: 14px;
+      padding: 20px;
+      box-shadow: 0 4px 24px rgba(14, 77, 111, 0.07);
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .advantage-card:active {
+      transform: scale(0.98);
+    }
+
+    .advantage-icon {
+      flex-shrink: 0;
+      width: 52px;
+      height: 52px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+    }
+
+    /* 表单 */
+    .form-input {
+      width: 100%;
+      padding: 14px 16px;
+      border: 1.5px solid #e2edf3;
+      border-radius: 10px;
+      font-size: 15px;
+      color: #1a3a4a;
+      background: #f8fbfd;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+      outline: none;
+      font-family: inherit;
+    }
+
+    .form-input:focus {
+      border-color: #00BFFF;
+      box-shadow: 0 0 0 3px rgba(0, 191, 255, 0.12);
+      background: #fff;
+    }
+
+    .form-input::placeholder {
+      color: #a0b8c8;
+    }
+
+    /* 多选面板 */
+    .skill-selector {
+      border: 1.5px solid #e2edf3;
+      border-radius: 10px;
+      background: #f8fbfd;
+      overflow: hidden;
+      transition: border-color 0.2s ease;
+    }
+
+    .skill-selector.active {
+      border-color: #00BFFF;
+    }
+
+    .skill-trigger {
+      width: 100%;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      background: transparent;
+      border: none;
+      font-size: 15px;
+      color: #a0b8c8;
+      font-family: inherit;
+    }
+
+    .skill-trigger.has-value {
+      color: #1a3a4a;
+    }
+
+    .skill-trigger svg {
+      transition: transform 0.3s ease;
+      flex-shrink: 0;
+    }
+
+    .skill-trigger.open svg {
+      transform: rotate(180deg);
+    }
+
+    .skill-options {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .skill-options.open {
+      max-height: 500px;
+    }
+
+    .skill-option {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      cursor: pointer;
+      transition: background 0.15s ease;
+      user-select: none;
+    }
+
+    .skill-option:hover {
+      background: rgba(0, 191, 255, 0.04);
+    }
+
+    .skill-checkbox {
+      width: 22px;
+      height: 22px;
+      border: 2px solid #c8daE5;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: all 0.2s ease;
+    }
+
+    .skill-checkbox.checked {
+      background: #00BFFF;
+      border-color: #00BFFF;
+    }
+
+    .skill-checkbox.checked svg {
+      opacity: 1;
+    }
+
+    .skill-checkbox svg {
+      opacity: 0;
+      transition: opacity 0.15s ease;
+    }
+
+    .skill-label {
+      font-size: 14.5px;
+      color: #2a4a5a;
+      line-height: 1.4;
+    }
+
+    .other-input {
+      margin: 0 16px 12px;
+      padding: 10px 14px;
+      border: 1.5px solid #e2edf3;
+      border-radius: 8px;
+      font-size: 14px;
+      width: calc(100% - 32px);
+      display: none;
+      background: #fff;
+      outline: none;
+      font-family: inherit;
+      color: #1a3a4a;
+      transition: border-color 0.2s;
+    }
+
+    .other-input:focus {
+      border-color: #00BFFF;
+    }
+
+    .other-input.show {
+      display: block;
+    }
+
+    /* 提交按钮 */
+    .submit-btn {
+      width: 100%;
+      padding: 16px;
+      background: linear-gradient(135deg, #00BFFF 0%, #0e9fd8 50%, #0e4d6f 100%);
+      color: #fff;
+      font-size: 17px;
+      font-weight: 600;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      letter-spacing: 2px;
+      transition: opacity 0.2s ease, transform 0.15s ease;
+      font-family: inherit;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .submit-btn:active {
+      transform: scale(0.97);
+      opacity: 0.9;
+    }
+
+    .submit-btn::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 200%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+      animation: shimmer 3s infinite;
+    }
+
+    @keyframes shimmer {
+      0% {
+        left: -100%;
+      }
+
+      100% {
+        left: 100%;
+      }
+    }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0.85);
+      background: rgba(10, 58, 84, 0.92);
+      color: #fff;
+      padding: 16px 32px;
+      border-radius: 12px;
+      font-size: 15px;
+      z-index: 1000;
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.3s ease;
+      text-align: center;
+      max-width: 280px;
+      backdrop-filter: blur(8px);
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+    }
+
+    /* 底部 */
+    .footer-brand {
+      text-align: center;
+      padding: 40px 20px 50px;
+      background: linear-gradient(180deg, #f0f7fc 0%, #e6f2fa 100%);
+    }
+
+    /* 动画 */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(24px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .animate-in {
+      animation: fadeInUp 0.6s ease forwards;
+      opacity: 0;
+    }
+
+    .delay-1 {
+      animation-delay: 0.1s;
+    }
+
+    .delay-2 {
+      animation-delay: 0.2s;
+    }
+
+    .delay-3 {
+      animation-delay: 0.3s;
+    }
+
+    .delay-4 {
+      animation-delay: 0.4s;
+    }
+
+    .delay-5 {
+      animation-delay: 0.5s;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Toast 提示 -->
+  <div class="toast" id="toast"></div>
+
+  <!-- === Hero 头部 === -->
+  <section class="hero-section">
+    <div class="hero-person"></div>
+    <div style="position:relative; z-index:2; padding: 48px 28px 80px;">
+      <!-- Logo -->
+      <div style="margin-bottom: 36px;" class="animate-in">
+        <svg width="130" height="40" viewBox="0 0 520 150" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- 无穷符号人形 -->
+          <circle cx="52" cy="28" r="14" fill="rgba(255,255,255,0.95)" />
+          <circle cx="108" cy="28" r="11" fill="rgba(255,255,255,0.95)" />
+          <path
+            d="M20 85 C20 55, 52 45, 80 75 C108 105, 140 95, 140 70 C140 50, 120 40, 108 55 C96 70, 80 75, 80 75 C80 75, 64 70, 52 55 C40 40, 20 50, 20 70 Z"
+            stroke="rgba(255,255,255,0.95)" stroke-width="9" fill="none" stroke-linecap="round" />
+          <!-- 文字 -->
+          <text x="168" y="65" fill="rgba(255,255,255,0.95)" font-size="56" font-weight="700"
+            font-family="PingFang SC, Microsoft YaHei, sans-serif">福善家事</text>
+          <text x="170" y="100" fill="rgba(255,255,255,0.7)" font-size="20" letter-spacing="3"
+            font-family="Helvetica Neue, Arial, sans-serif">FUSHAN FAMILY AFFAIRS</text>
+        </svg>
+      </div>
+      <!-- 主标题 -->
+      <div class="animate-in delay-1">
+        <p style="font-size: 14px; color: rgba(255,255,255,0.7); margin-bottom: 12px; letter-spacing: 2px;">共享经济×社区康养
+        </p>
+        <h1 style="font-size: 32px; font-weight: 800; color: #fff; line-height: 1.35; letter-spacing: 1px;">
+          加入福善家事<br>成为社区健康管家
+        </h1>
+      </div>
+    </div>
+  </section>
+
+  <!-- === 主体内容 === -->
+  <main style="max-width: 480px; margin: 0 auto; padding: 0 20px; position: relative; z-index: 5; margin-top: -20px;">
+
+    <!-- 价值主张 -->
+    <section style="text-align: center; padding: 28px 0 32px;" class="animate-in delay-2">
+      <h2 style="font-size: 20px; color: #1a3a4a; font-weight: 700; margin-bottom: 6px;">您不只是一个推拿师</h2>
+      <p style="font-size: 20px; font-weight: 700; margin-bottom: 14px;">
+        <span
+          style="background: linear-gradient(0deg, rgba(0,191,255,0.2) 0%, rgba(0,191,255,0.2) 40%, transparent 40%); padding: 0 4px; color: #0e4d6f;">而是一个社区健康管家</span>
+      </p>
+      <p style="font-size: 14px; color: #6a8fa5; line-height: 1.7; margin: 0 auto; padding: 0 16px;">
+        我们重新定义推拿行业，从零散低价开放式服务方式，转向社区健康资产管理。
+      </p>
+    </section>
+
+    <!-- 三大优势卡片 -->
+    <section style="display: flex; flex-direction: column; gap: 16px; margin-bottom: 40px;">
+      <!-- 卡片 1 -->
+      <div class="advantage-card animate-in delay-2">
+        <div class="advantage-icon" style="background: linear-gradient(135deg, #e6f9ff, #ccf2ff);">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#00BFFF" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+            <polyline points="14 2 14 8 20 8" />
+            <line x1="16" y1="13" x2="8" y2="13" />
+            <line x1="16" y1="17" x2="8" y2="17" />
+            <polyline points="10 9 9 9 8 9" />
+          </svg>
+        </div>
+        <div>
+          <h3 style="font-size: 16px; font-weight: 700; color: #0e4d6f; margin-bottom: 4px;">专业的数字化档案系统</h3>
+          <p style="font-size: 13.5px; color: #6a8fa5; line-height: 1.6;">建立可视化健康档案库，让你的每位客户都有清晰的服务轨迹记录。</p>
+        </div>
+      </div>
+      <!-- 卡片 2 -->
+      <div class="advantage-card animate-in delay-3">
+        <div class="advantage-icon" style="background: linear-gradient(135deg, #e6f9ff, #ccf2ff);">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#00BFFF" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+            <circle cx="9" cy="7" r="4" />
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+            <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+          </svg>
+        </div>
+        <div>
+          <h3 style="font-size: 16px; font-weight: 700; color: #0e4d6f; margin-bottom: 4px;">持续的会员流量池</h3>
+          <p style="font-size: 13.5px; color: #6a8fa5; line-height: 1.6;">深耕社区私域客户资源，精深服务，让从业不再打游击。</p>
+        </div>
+      </div>
+      <!-- 卡片 3 -->
+      <div class="advantage-card animate-in delay-4">
+        <div class="advantage-icon" style="background: linear-gradient(135deg, #e6f9ff, #ccf2ff);">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#00BFFF" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="8" r="7" />
+            <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88" />
+          </svg>
+        </div>
+        <div>
+          <h3 style="font-size: 16px; font-weight: 700; color: #0e4d6f; margin-bottom: 4px;">积极增值的激励体系</h3>
+          <p style="font-size: 13.5px; color: #6a8fa5; line-height: 1.6;">合理协助构建公信机制，让你的每一份辛劳，转化为值得的回报。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- === 合作意向表单 === -->
+    <section
+      style="background: #fff; border-radius: 18px; padding: 28px 22px 32px; box-shadow: 0 4px 30px rgba(14,77,111,0.06); margin-bottom: 24px;"
+      class="animate-in delay-5">
+      <h2 style="font-size: 20px; font-weight: 700; color: #0e4d6f; text-align: center; margin-bottom: 6px;">提交合作意向</h2>
+      <p style="font-size: 13.5px; color: #8aacbe; text-align: center; margin-bottom: 26px;">填写下方的信息，我们的招聘专员会尽快与您联系。</p>
+
+      <form id="joinForm" onsubmit="return handleSubmit(event)">
+        <!-- 姓名 -->
+        <div style="margin-bottom: 18px;">
+          <label
+            style="display: block; font-size: 14px; font-weight: 600; color: #2a4a5a; margin-bottom: 8px;">姓名</label>
+          <input type="text" class="form-input" id="name" placeholder="请输入您的真实姓名" autocomplete="name">
+        </div>
+
+        <!-- 联系电话 -->
+        <div style="margin-bottom: 18px;">
+          <label
+            style="display: block; font-size: 14px; font-weight: 600; color: #2a4a5a; margin-bottom: 8px;">联系电话</label>
+          <input type="tel" class="form-input" id="phone" placeholder="请输入长期联系电话" maxlength="11" autocomplete="tel"
+            inputmode="numeric">
+        </div>
+
+        <!-- 擅长领域（多选） -->
+        <div style="margin-bottom: 24px;">
+          <label
+            style="display: block; font-size: 14px; font-weight: 600; color: #2a4a5a; margin-bottom: 8px;">擅长领域（可多选）</label>
+          <div class="skill-selector" id="skillSelector">
+            <button type="button" class="skill-trigger" id="skillTrigger" onclick="toggleSkills()">
+              <span id="skillPlaceholder">请选择您的专业领域</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#a0b8c8" stroke-width="2.5"
+                stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="6 9 12 15 18 9" />
+              </svg>
+            </button>
+            <div class="skill-options" id="skillOptions">
+              <label class="skill-option" onclick="toggleCheck(this)">
+                <span class="skill-checkbox"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff"
+                    stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12" />
+                  </svg></span>
+                <span class="skill-label">经络导引/推拿</span>
+              </label>
+              <label class="skill-option" onclick="toggleCheck(this)">
+                <span class="skill-checkbox"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff"
+                    stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12" />
+                  </svg></span>
+                <span class="skill-label">艾灸/拔罐</span>
+              </label>
+
+              <label class="skill-option" onclick="toggleCheck(this)">
+                <span class="skill-checkbox"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff"
+                    stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12" />
+                  </svg></span>
+                <span class="skill-label">小儿推拿</span>
+              </label>
+              <label class="skill-option" onclick="toggleCheck(this)">
+                <span class="skill-checkbox"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff"
+                    stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12" />
+                  </svg></span>
+                <span class="skill-label">产后康复</span>
+              </label>
+              <label class="skill-option" onclick="toggleCheck(this)">
+                <span class="skill-checkbox"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff"
+                    stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12" />
+                  </svg></span>
+                <span class="skill-label">运动损伤康复</span>
+              </label>
+              <label class="skill-option" onclick="toggleCheck(this)">
+                <span class="skill-checkbox"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff"
+                    stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12" />
+                  </svg></span>
+                <span class="skill-label">慢病管理（高血压、糖尿病等饮食干预）</span>
+              </label>
+              <label class="skill-option" onclick="toggleCheck(this, true)">
+                <span class="skill-checkbox"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff"
+                    stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12" />
+                  </svg></span>
+                <span class="skill-label">其他</span>
+              </label>
+              <input type="text" class="other-input" id="otherSkill" placeholder="请输入您的其他擅长领域">
+            </div>
+          </div>
+        </div>
+
+        <!-- 提交按钮 -->
+        <button type="submit" class="submit-btn" id="submitBtn">提交合作意向</button>
+      </form>
+    </section>
+  </main>
+
+  <!-- === 品牌底部 === -->
+  <footer class="footer-brand">
+    <div style="max-width: 480px; margin: 0 auto;">
+      <!-- Logo SVG -->
+      <div style="margin-bottom: 12px;">
+        <svg width="160" height="55" viewBox="0 0 520 150" fill="none" xmlns="http://www.w3.org/2000/svg"
+          style="display:inline-block;">
+          <circle cx="52" cy="28" r="14" fill="#1a3a4a" />
+          <circle cx="108" cy="28" r="11" fill="#1a3a4a" />
+          <path
+            d="M20 85 C20 55, 52 45, 80 75 C108 105, 140 95, 140 70 C140 50, 120 40, 108 55 C96 70, 80 75, 80 75 C80 75, 64 70, 52 55 C40 40, 20 50, 20 70 Z"
+            stroke="#1a3a4a" stroke-width="9" fill="none" stroke-linecap="round" />
+          <text x="168" y="65" fill="#1a3a4a" font-size="56" font-weight="700"
+            font-family="PingFang SC, Microsoft YaHei, sans-serif">福善家事</text>
+          <text x="170" y="100" fill="#8aacbe" font-size="20" letter-spacing="3"
+            font-family="Helvetica Neue, Arial, sans-serif">FUSHAN FAMILY AFFAIRS</text>
+        </svg>
+      </div>
+      <p style="font-size: 14px; color: #8aacbe; letter-spacing: 3px; margin-bottom: 4px;">COMMUNITY HEALTH STEWARD</p>
+      <p style="font-size: 12.5px; color: #a0b8c8; margin-top: 12px; line-height: 1.6;">"因善家事，健康万家"</p>
+    </div>
+  </footer>
+
+  <script>
+    // 多选展开/收起
+    function toggleSkills() {
+      var options = document.getElementById('skillOptions');
+      var trigger = document.getElementById('skillTrigger');
+      var selector = document.getElementById('skillSelector');
+      var isOpen = options.classList.contains('open');
+      options.classList.toggle('open');
+      trigger.classList.toggle('open');
+      if (isOpen) {
+        selector.classList.remove('active');
+      } else {
+        selector.classList.add('active');
+      }
+    }
+
+    // 选中/取消
+    function toggleCheck(el, isOther) {
+      var cb = el.querySelector('.skill-checkbox');
+      cb.classList.toggle('checked');
+      if (isOther) {
+        var otherInput = document.getElementById('otherSkill');
+        if (cb.classList.contains('checked')) {
+          otherInput.classList.add('show');
+          setTimeout(function () { otherInput.focus(); }, 100);
+        } else {
+          otherInput.classList.remove('show');
+          otherInput.value = '';
+        }
+      }
+      updatePlaceholder();
+    }
+
+    // 更新提示文字
+    function updatePlaceholder() {
+      var checked = document.querySelectorAll('.skill-checkbox.checked');
+      var placeholder = document.getElementById('skillPlaceholder');
+      var trigger = document.getElementById('skillTrigger');
+      if (checked.length > 0) {
+        var labels = [];
+        checked.forEach(function (cb) {
+          var label = cb.parentElement.querySelector('.skill-label').textContent;
+          labels.push(label);
+        });
+        var text = labels.join('、');
+        if (text.length > 20) {
+          text = text.substring(0, 20) + '...';
+        }
+        placeholder.textContent = '已选: ' + text;
+        placeholder.style.color = '#1a3a4a';
+        trigger.classList.add('has-value');
+      } else {
+        placeholder.textContent = '请选择您的专业领域';
+        placeholder.style.color = '#a0b8c8';
+        trigger.classList.remove('has-value');
+      }
+    }
+
+    // Toast 提示
+    function showToast(msg, duration) {
+      var toast = document.getElementById('toast');
+      toast.textContent = msg;
+      toast.classList.add('show');
+      setTimeout(function () {
+        toast.classList.remove('show');
+      }, duration || 2500);
+    }
+
+    // 表单校验与提交
+    function handleSubmit(e) {
+      e.preventDefault();
+      var name = document.getElementById('name').value.trim();
+      var phone = document.getElementById('phone').value.trim();
+      var checked = document.querySelectorAll('.skill-checkbox.checked');
+
+      if (!name) {
+        showToast('请输入您的姓名');
+        document.getElementById('name').focus();
+        return false;
+      }
+      if (!phone || !/^1[3-9]\d{9}$/.test(phone)) {
+        showToast('请输入正确的11位手机号码');
+        document.getElementById('phone').focus();
+        return false;
+      }
+      if (checked.length === 0) {
+        showToast('请至少选择一个擅长领域');
+        return false;
+      }
+
+      // 收集数据
+      var skills = [];
+      checked.forEach(function (cb) {
+        var label = cb.parentElement.querySelector('.skill-label').textContent;
+        if (label === '其他') {
+          var otherVal = document.getElementById('otherSkill').value.trim();
+          if (otherVal) {
+            skills.push('其他: ' + otherVal);
+          } else {
+            skills.push('其他');
+          }
+        } else {
+          skills.push(label);
+        }
+      });
+
+      var data = {
+        name: name,
+        phone: phone,
+        skills: skills,
+        submitTime: new Date().toLocaleString('zh-CN')
+      };
+
+      console.log('提交数据:', JSON.stringify(data, null, 2));
+
+      // 模拟提交成功
+      var btn = document.getElementById('submitBtn');
+      btn.textContent = '提交中...';
+      btn.disabled = true;
+      btn.style.opacity = '0.7';
+
+      setTimeout(function () {
+        showToast('提交成功！我们将尽快与您联系', 3000);
+        btn.textContent = '已提交';
+        btn.style.background = 'linear-gradient(135deg, #2dd4a8, #0e9fd8)';
+        // 重置
+        setTimeout(function () {
+          document.getElementById('joinForm').reset();
+          document.querySelectorAll('.skill-checkbox.checked').forEach(function (cb) {
+            cb.classList.remove('checked');
+          });
+          document.getElementById('otherSkill').classList.remove('show');
+          document.getElementById('otherSkill').value = '';
+          updatePlaceholder();
+          btn.textContent = '提交合作意向';
+          btn.disabled = false;
+          btn.style.opacity = '1';
+          btn.style.background = 'linear-gradient(135deg, #00BFFF 0%, #0e9fd8 50%, #0e4d6f 100%)';
+        }, 3000);
+      }, 1200);
+
+      return false;
+    }
+
+    // 点击外部关闭
+    document.addEventListener('click', function (e) {
+      var selector = document.getElementById('skillSelector');
+      if (!selector.contains(e.target)) {
+        var options = document.getElementById('skillOptions');
+        var trigger = document.getElementById('skillTrigger');
+        if (options.classList.contains('open')) {
+          options.classList.remove('open');
+          trigger.classList.remove('open');
+          selector.classList.remove('active');
+        }
+      }
+    });
+  </script>
+
+</body>
+
+</html>

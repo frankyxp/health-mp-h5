@@ -484,7 +484,7 @@
       <h2 style="font-size: 20px; font-weight: 700; color: #0e4d6f; text-align: center; margin-bottom: 6px;">提交合作意向</h2>
       <p style="font-size: 13.5px; color: #8aacbe; text-align: center; margin-bottom: 26px;">填写下方的信息，我们的招聘专员会尽快与您联系。</p>
 
-      <form id="joinForm" onsubmit="return handleSubmit(event)">
+      <form id="joinForm" onsubmit="return submitForm(event)">
         <!-- 姓名 -->
         <div style="margin-bottom: 18px;">
           <label
@@ -666,7 +666,7 @@
     }
 
     // 表单校验与提交
-    function handleSubmit(e) {
+    function submitForm(e) {
       e.preventDefault();
       var name = document.getElementById('name').value.trim();
       var phone = document.getElementById('phone').value.trim();
@@ -726,7 +726,7 @@
         .then(function (res) { return res.json(); })
         .then(function (result) {
           if (result.success) {
-            showToast('提交成功！我们将尽快与您联系', 3000);
+            showToast('🎉 报名成功！我们将尽快联系您', 3000);
             btn.textContent = '已提交';
             btn.style.background = 'linear-gradient(135deg, #2dd4a8, #0e9fd8)';
             // 重置

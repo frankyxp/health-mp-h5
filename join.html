@@ -712,31 +712,51 @@
 
       console.log('提交数据:', JSON.stringify(data, null, 2));
 
-      // 模拟提交成功
+      // 提交到后端
       var btn = document.getElementById('submitBtn');
       btn.textContent = '提交中...';
       btn.disabled = true;
       btn.style.opacity = '0.7';
 
-      setTimeout(function () {
-        showToast('提交成功！我们将尽快与您联系', 3000);
-        btn.textContent = '已提交';
-        btn.style.background = 'linear-gradient(135deg, #2dd4a8, #0e9fd8)';
-        // 重置
-        setTimeout(function () {
-          document.getElementById('joinForm').reset();
-          document.querySelectorAll('.skill-checkbox.checked').forEach(function (cb) {
-            cb.classList.remove('checked');
-          });
-          document.getElementById('otherSkill').classList.remove('show');
-          document.getElementById('otherSkill').value = '';
-          updatePlaceholder();
+      fetch('/api/join', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      })
+        .then(function (res) { return res.json(); })
+        .then(function (result) {
+          if (result.success) {
+            showToast('提交成功！我们将尽快与您联系', 3000);
+            btn.textContent = '已提交';
+            btn.style.background = 'linear-gradient(135deg, #2dd4a8, #0e9fd8)';
+            // 重置
+            setTimeout(function () {
+              document.getElementById('joinForm').reset();
+              document.querySelectorAll('.skill-checkbox.checked').forEach(function (cb) {
+                cb.classList.remove('checked');
+              });
+              document.getElementById('otherSkill').classList.remove('show');
+              document.getElementById('otherSkill').value = '';
+              updatePlaceholder();
+              btn.textContent = '提交合作意向';
+              btn.disabled = false;
+              btn.style.opacity = '1';
+              btn.style.background = 'linear-gradient(135deg, #00BFFF 0%, #0e9fd8 50%, #0e4d6f 100%)';
+            }, 3000);
+          } else {
+            showToast(result.message || '提交失败，请稍后重试');
+            btn.textContent = '提交合作意向';
+            btn.disabled = false;
+            btn.style.opacity = '1';
+          }
+        })
+        .catch(function (err) {
+          console.error('提交失败:', err);
+          showToast('网络错误，请稍后重试');
           btn.textContent = '提交合作意向';
           btn.disabled = false;
           btn.style.opacity = '1';
-          btn.style.background = 'linear-gradient(135deg, #00BFFF 0%, #0e9fd8 50%, #0e4d6f 100%)';
-        }, 3000);
-      }, 1200);
+        });
 
       return false;
     }
